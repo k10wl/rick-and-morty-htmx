@@ -1,0 +1,32 @@
+{{define "home"}}
+{{template "head" .}}
+{{template "header"}}
+<main class="container mx-auto py-5">
+  <img src="assets/images/morty-face.png" class="p-4 mx-auto sm:float-right" />
+  <div class="mx-auto">
+    <h1 class="text-2xl">Tech Explorer: Rick and Morty Edition</h1>
+    <h2 class="text-xl">Welcome to our tech exploration using Rick and Morty data!</h2>
+    <br>
+    <h3 class="text-lg">Tech Stack:</h3>
+    <ul>
+      <li> <b>Backend: </b>Golang with Gin.</li>
+      <li> <b>Frontend: </b>HTMX + Tailwind.</li>
+      <li> <b>Rendering: </b>html/template.</li>
+    </ul>
+    <br>
+    <h3 class="text-lg">Tech Stack:</h3>
+    <ol>
+      <li> <b>Home page: </b>Overview of the tech and project.</li>
+      <li> <b>Characters: </b>Display list of characters.</li>
+      <li> <b>Locations: </b>Explore series locations.</li>
+      <li> <b>Episodes: </b>View episode details.</li>
+    </ol>
+    <br>
+    <p>
+    <b>Note: </b>This app's primary goal is to showcase the tech stack using the
+    Rick and Morty API, not a deep dive into the show itself or visuals of app. 
+    </p>
+  </div>
+</main>
+{{template "tail"}}
+{{end}}

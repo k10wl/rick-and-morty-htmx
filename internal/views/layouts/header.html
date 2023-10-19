@@ -1,0 +1,34 @@
+{{define "header"}}
+<header class="bg-black text-white px-5 py-2">
+  <div class="container mx-auto">
+    <nav hx-boost="true" class="sm:flex justify-between">
+      <ul class="flex justify-between">
+        <li>
+          <a href="/">
+            <img class="h-6" src="assets/images/logo.png" alt="Rick and Morty">
+          </a>
+        </li>
+        <button class="sm:hidden" onclick="toggleMenu(this)">☰</button>
+      </ul>
+      {{ $linkClass := "block sm:inline-block" }}
+      <ul id="header-links" class="hidden grid mt-5 sm:mt-0 sm:flex gap-5">
+        <li>
+          <a class="{{$linkClass}}" href="/characters">Characters</a>
+        </li>
+        <li>
+          <a class="{{$linkClass}}" href="/episodes">Eposides</a>
+        </li>
+        <li>
+          <a class="{{$linkClass}}" href="/locations">Locations</a>
+        </li>
+      </ul>
+      <script>
+        function toggleMenu(el) {
+          const res = document.getElementById("header-links").classList.toggle("hidden")
+          el.innerText = res ? "☰" : "✕" 
+        }
+      </script>
+    </nav>
+  </div>
+</header>
+{{end}}

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx tailwindcss -i ./assets/css/stylesheet.css -o ./assets/css/tw-build.css"
+    "build:css": "NODE_ENV=production npx tailwindcss build -i ./assets/css/stylesheet.css -o assets/css/tw-build.css",
+    "dev:css": "npx tailwindcss build -i ./assets/css/stylesheet.css -o assets/css/tw-build.css"
   },
   "keywords": [],
   "author": "",

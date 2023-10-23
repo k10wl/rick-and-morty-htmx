@@ -1,47 +1,40 @@
-{{define "locations-page"}}
+{{define "episodes"}}
 {{template "head" .}}
 {{template "header"}}
 <main class="container mx-auto p-5">
   <div>
-    <input placeholder="Location name" name="name" type="text"/>
-    <input placeholder="Type" name="type" type="text"/>
-    <input placeholder="Dimension" name="dimension" type="text"/>
+    <input placeholder="Episode name" name="name" type="text" />
   </div>
   <br>
   <div
-    hx-get="/locations/list"
+    hx-get="/episodes/list"
     hx-trigger="
     load,
     keyup changed delay:400ms from:input
     "
     hx-include="input"
     hx-swap="outerHTML"
-    hx-target="#locations-list"
+    hx-target="#episodes-list"
     hx-indicator="#loading"
     >
-    {{template "locations-data" .}}
+    {{template "episodes-list" .}}
   </div>
 </main>
 {{template "tail"}}
 {{end}}
 
-
-{{define "locations-data"}}
-<div id="locations-list" class="grid gap-5">
+{{define "episodes-list"}}
+<div id="episodes-list" class="grid gap-5">
   <div
     class="border border-black/70"
     >
     <div class="bg-black text-white grid grid-cols-3">
       <span>Name</span>
-      <span class="border-x border-x-white/70">Type</span>
-      <span>Dimension</span>
     </div>
     <div>
-      {{range .Locations}}
+      {{range .Episodes}}
       <div class="grid grid-cols-3 odd:bg-gray-300">
         <span>{{.Name}}</span>
-        <span class="border-x border-x-black/70">{{.Type}}</span>
-        <span>{{.Dimension}}</span>
       </div>
       {{else}}
       No results
@@ -53,9 +46,9 @@
     <button
       {{if eq .Pages.Prev 0}}disabled="true"{{end}}
       class="border bg-blue-500 rounded px-4 py-2 text-white disabled:bg-gray-400 disabled:text-black"
-      hx-get="/locations/list"
+      hx-get="/episodes/list"
       hx-swap="outerHTML"
-      hx-target="#locations-list"
+      hx-target="#episodes-list"
       hx-vals='{"page": "{{.Pages.Prev}}"}'
       hx-include="[name='name'],[name='type'],[name='dimension']"
       >
@@ -64,9 +57,9 @@
       <button
         {{if eq .Pages.Next 0}}disabled="true"{{end}}
         class="border bg-blue-500 rounded px-4 py-2 text-white disabled:bg-gray-400 disabled:text-black"
-        hx-get="/locations/list"
+        hx-get="/episodes/list"
         hx-swap="outerHTML"
-        hx-target="#locations-list"
+        hx-target="#episodes-list"
         hx-vals='{"page": "{{.Pages.Next}}"}'
         hx-include="[name='name'],[name='type'],[name='dimension']"
         >
@@ -75,4 +68,3 @@
   </div>
 </div>
 {{end}}
-

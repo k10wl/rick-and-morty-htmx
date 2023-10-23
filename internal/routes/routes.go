@@ -11,4 +11,6 @@ func ApplyRoutes(r *gin.Engine) {
 	r.GET("/characters", handlers.CharactersPage)
 	r.GET("/locations", handlers.LocationsPage)
 	r.GET("/locations/list", handlers.LocationList)
+	r.GET("/episodes", handlers.EpisodesPage)
+	r.GET("/episodes/list", handlers.EpisodesList)
 }

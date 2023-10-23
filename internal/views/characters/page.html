@@ -1,0 +1,114 @@
+{{define "characters"}}
+{{template "head" .}}
+{{template "header"}}
+<main class="container mx-auto p-5">
+
+  <input
+  type="text"
+  placeholder="Filter by name"
+  name="name"
+  hx-replace-url="true"
+  hx-get="/characters"
+  hx-swap="none"
+  hx-include="[name='status'],[name='species'],[name='gender']"
+  hx-trigger="keyup changed delay:250ms"
+  value="{{(index .Params.name 0)}}"
+  >
+  <select
+    name="gender"
+    hx-replace-url="true"
+    hx-get="/characters"
+    hx-swap="none"
+    hx-include="[name='name'],[name='species'],[name='status']"
+    hx-trigger="change"
+    >
+    <option value="">--gender--</option>
+    <option {{if eq (index .Params.gender 0) "female"}}selected{{end}} value="female">Female</option>
+    <option {{if eq (index .Params.gender 0) "male"}}selected{{end}} value="male">Male</option>
+    <option {{if eq (index .Params.gender 0) "genderless"}}selected{{end}} value="genderless">Genderless</option>
+    <option {{if eq (index .Params.gender 0) "unknown"}}selected{{end}} value="unknown">Unknown</option>
+  </select>
+  <select
+    name="status"
+    hx-replace-url="true"
+    hx-get="/characters"
+    hx-swap="none"
+    hx-include="[name='name'],[name='species'],[name='gender']"
+    hx-trigger="change"
+    value="{{(index .Params.status 0)}}"
+    >
+    <option value="">--status--</option>
+    <option {{if eq (index .Params.status 0) "alive"}}selected{{end}} value="alive">Alive</option>
+    <option {{if eq (index .Params.status 0) "dead"}}selected{{end}} value="dead">Dead</option>
+    <option {{if eq (index .Params.status 0) "unknown"}}selected{{end}} value="unknown">Unknown</option>
+  </select>
+  <input
+  type="text"
+  placeholder="Filter by species"
+  name="species"
+  hx-replace-url="true"
+  hx-get="/characters"
+  hx-swap="none"
+  hx-include="[name='status'],[name='name'],[name='gender']"
+  hx-trigger="keyup changed delay:250ms"
+  value="{{(index .Params.species 0)}}"
+  >
+
+  <hr class="my-5">
+
+  <div hx-swap-oob="true" id="characters">
+    {{template "characters-list" .}}
+  </div>
+
+  <br>
+
+  <div id="pagination" hx-swap-oob="true" class="flex justify-center gap-2">
+    <button
+      {{if eq .Pages.Prev 0}}disabled="true"{{end}}
+      class="border bg-blue-500 rounded px-4 py-2 text-white disabled:bg-gray-400 disabled:text-black"
+      hx-get="/characters"
+      hx-swap="none"
+      hx-replace-url="true"
+      hx-vals='{"page": "{{.Pages.Prev}}"}'
+      hx-include="[name='name'],[name='status'],[name='species'],[name='gender']"
+      >
+      prev
+    </button>
+    <button
+      {{if eq .Pages.Next 0}}disabled="true"{{end}}
+      class="border bg-blue-500 rounded px-4 py-2 text-white disabled:bg-gray-400 disabled:text-black"
+      hx-get="/characters"
+      hx-swap="none"
+      hx-replace-url="true"
+      hx-vals='{"page": "{{.Pages.Next}}"}'
+      hx-include="[name='name'],[name='status'],[name='species'],[name='gender']"
+      >
+      next
+    </button>
+  </div>
+</main>
+{{template "tail"}}
+{{end}}
+
+{{define "characters-list"}}
+<ul class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+  {{range .Characters}}
+  {{template "character-card" .}}
+  {{else}}
+  <p class="text-center">No characters found</p>
+  {{end}}
+</ul>
+{{end}}
+
+{{define "character-card"}}
+<li class="rounded-lg border grid grid-cols-[3rem_1fr] p-5 shadow">
+  <span class="overflow-hidden w-8 h-8 rounded-full">
+    <img src="{{.Image}}" />
+  </span>
+  <div>
+    <p>{{.Name}}</p>
+    <p class="text-sm text-gray-500">{{.Location.Name}}</p>
+    <p class="text-sm text-gray-500">{{.Status}} • {{.Species}}</p>
+  </div>
+</li>
+{{end}}

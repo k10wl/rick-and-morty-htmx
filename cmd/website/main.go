@@ -1,7 +1,7 @@
 package main
 
 import (
-	"net/http"
+	"rick-and-morty-htmx/internal/routes"
 
 	"github.com/gin-gonic/gin"
 )
@@ -11,12 +11,7 @@ func main() {
 
 	r.LoadHTMLGlob("internal/views/**/*.html")
 	r.Static("/assets", "./assets")
-
-	r.GET("/", func(ctx *gin.Context) {
-		ctx.HTML(http.StatusOK, "home", map[string]interface{}{
-			"Title": "Tech explorer",
-		})
-	})
+	routes.ApplyRoutes(r)
 
 	r.Run(":8080")
 }

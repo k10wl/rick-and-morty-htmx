@@ -29,8 +29,8 @@ type Characters struct {
 	Results []Character `json:"results"`
 }
 
-func GetCharacters() (*Characters, error) {
-	b, err := req(baseUrl + characters)
+func GetCharacters(params string) (*Characters, error) {
+	b, err := req(baseUrl + characters + "?" + params)
 	if err != nil {
 		return nil, err
 	}

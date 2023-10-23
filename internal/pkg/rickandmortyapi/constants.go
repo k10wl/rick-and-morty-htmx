@@ -1,6 +1,7 @@
 package rickandmortyapi
 
 const (
-	baseUrl    = "https://rickandmortyapi.com/api"
-	characters = "/character"
+	baseUrl   = "https://rickandmortyapi.com/api"
+	character = "/character"
+	location  = "/location"
 )

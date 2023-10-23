@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"net/http"
-	"strconv"
 
 	"rick-and-morty-htmx/internal/pkg/rickandmortyapi"
 
@@ -14,25 +13,7 @@ func CharactersPage(ctx *gin.Context) {
 
 	c, _ := rickandmortyapi.GetCharacters(q.Encode())
 
-	Pages := map[string]int{
-		"Prev": 0,
-		"Next": 0,
-	}
-	p, exists := ctx.GetQuery("page")
-	if exists {
-		pi, err := strconv.Atoi(p)
-		if err == nil {
-			Pages["Prev"] = pi - 1
-			if c.Info.Next != "" {
-				Pages["Next"] = pi + 1
-			}
-		}
-	} else {
-		Pages["Prev"] = 0
-		if c.Info.Next != "" {
-			Pages["Next"] = 2
-		}
-	}
+	pages := getPages(ctx, c.Info)
 
 	if ok := q.Has("name"); !ok {
 		q.Set("name", "")
@@ -51,7 +32,7 @@ func CharactersPage(ctx *gin.Context) {
 		"Title":      "Characters",
 		"Characters": c.Results,
 		"Info":       c.Info,
-		"Pages":      Pages,
+		"Pages":      pages,
 		"Params":     q,
 	})
 }

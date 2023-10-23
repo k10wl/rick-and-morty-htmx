@@ -30,7 +30,7 @@ type Characters struct {
 }
 
 func GetCharacters(params string) (*Characters, error) {
-	b, err := req(baseUrl + characters + "?" + params)
+	b, err := req(baseUrl + character + "?" + params)
 	if err != nil {
 		return nil, err
 	}

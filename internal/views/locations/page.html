@@ -1,0 +1,78 @@
+{{define "locations-page"}}
+{{template "head" .}}
+{{template "header"}}
+<main class="container mx-auto p-5">
+  <div>
+    <input placeholder="Location name" name="name" type="text"/>
+    <input placeholder="Type" name="type" type="text"/>
+    <input placeholder="Dimension" name="dimension" type="text"/>
+  </div>
+  <br>
+  <div
+    hx-get="/locations/list"
+    hx-trigger="
+    load,
+    keyup change delay:400ms from:input
+    "
+    hx-include="input"
+    hx-swap="outerHTML"
+    hx-target="#locations-list"
+    hx-indicator="#loading"
+    >
+    {{template "locations-data" .}}
+  </div>
+</main>
+{{template "tail"}}
+{{end}}
+
+
+{{define "locations-data"}}
+<div id="locations-list" class="grid gap-5">
+  <div
+    class="border border-black/70"
+    >
+    <div class="bg-black text-white grid grid-cols-3">
+      <span>Name</span>
+      <span class="border-x border-x-white/70">Type</span>
+      <span>Dimension</span>
+    </div>
+    <div>
+      {{range .Locations}}
+      <div class="grid grid-cols-3 odd:bg-gray-300">
+        <span>{{.Name}}</span>
+        <span class="border-x border-x-black/70">{{.Type}}</span>
+        <span>{{.Dimension}}</span>
+      </div>
+      {{else}}
+      No results
+      {{end}}
+      <p id="loading" class="htmx-indicator">loading...</p>
+    </div>
+  </div>
+  <div class="flex justify-center gap-2">
+    <button
+      {{if eq .Pages.Prev 0}}disabled="true"{{end}}
+      class="border bg-blue-500 rounded px-4 py-2 text-white disabled:bg-gray-400 disabled:text-black"
+      hx-get="/locations/list"
+      hx-swap="outerHTML"
+      hx-target="#locations-list"
+      hx-vals='{"page": "{{.Pages.Prev}}"}'
+      hx-include="[name='name'],[name='type'],[name='dimension']"
+      >
+      prev
+    </button>
+      <button
+        {{if eq .Pages.Next 0}}disabled="true"{{end}}
+        class="border bg-blue-500 rounded px-4 py-2 text-white disabled:bg-gray-400 disabled:text-black"
+        hx-get="/locations/list"
+        hx-swap="outerHTML"
+        hx-target="#locations-list"
+        hx-vals='{"page": "{{.Pages.Next}}"}'
+        hx-include="[name='name'],[name='type'],[name='dimension']"
+        >
+        next
+      </button>
+  </div>
+</div>
+{{end}}
+
